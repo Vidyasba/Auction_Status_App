@@ -1,5 +1,7 @@
 const url="https://gauravgitacc.github.io/postAppData/auctionData.json";
 
+const container=document.getElementById("container");
+//fetch function resturn promise
 let prom=fetch(url);
 
 // prom.then((response)=>{
@@ -21,7 +23,54 @@ async function fetchData(){
     }
 }
 function renderData(data){
+    //DOM manipulation after getting data
     console.log(data);
+    //  <div class="card">
+//     <div class="top">
+//     <div class="left">
+//         <span class="badge">PENDING</span>
+//         <span class="case-number">123FG45</span>
+//     </div>
+//     <div class="right">
+//         <span class="date">MAR 23 2023 8:50 AM</span>
+//     </div>
+// </div>
+// <div class="bottom">
+//     <div class="from-location">Banglore Whitefiled Airport</div>
+//     <div class="to-location">HSR Layout</div>
+//     <div class="to-location">₹ 389</div>
+// </div>
+// </div>
+    // {
+    //     "status": "PENDING",
+    //     "caseNumber": "S230IS9230",
+    //     "date": "Mar 24, 2023, 5:10:24 PM",
+    //     "fromLocation": "MG Road Metro Station",
+    //     "toLocation": "Kodihalli, Bengaluru, Karnataka, India",
+    //     "fare": "₹ 200"
+    //   }
+
+    data.forEach((card)=>{
+        const cardContainer =document.createElement('div');
+        cardContainer.className="card";
+        cardContainer.innerHTML=`
+        <div class="top">
+                <div class="left">
+                     <span class="badge ${card.status.toLowerCase()}">${card.status}</span>
+                    <span class="case-number">${card.caseNumber}</span>
+                 </div>
+                <div class="right">
+                     <span class="date">${card.date}</span>
+                </div>
+        </div>
+        <div class="bottom">
+                <div class="from-location">${card.fromLocation}</div>
+                <div class="to-location">${card.toLocation}</div>
+                <div class="to-location">${card.fare}</div>
+        </div>
+        `
+        container.appendChild(cardContainer);
+    })
 }
 fetchData();
 
